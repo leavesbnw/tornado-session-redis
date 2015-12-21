@@ -15,7 +15,7 @@ class Session(dict):
 		self.session_id = session_manager.getid(request_handler)
 	
 	def save(self):
-		self.session_manager.set(self.request_handler, self)
+		self.session_manager.set(self,self.request_handler)
 
 
 class SessionManager(object):
@@ -47,7 +47,7 @@ class SessionManager(object):
 			session_id = self._generate_id()
 		return session_id
 	
-	def set(self, request_handler, session):
+	def set(self, session,request_handler):
 		request_handler.set_secure_cookie("session_id", session.session_id)
 
 		session_data = ujson.dumps(dict(session.items()))
