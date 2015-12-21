@@ -11,16 +11,16 @@ from base import BaseHandler
 
 class Application(tornado.web.Application):
     def __init__(self):
-        
         settings = dict(
             cookie_secret = "e446976943b4e8442f099fed1f3fea28462d5832f483a0ed9a3d5d3859f==78d",
             session_secret = "3cdcb1f00803b6e78ab50b466a40b9977db396840c28307f428b25e2277f1bcc",
-            session_timeout = 60,
+            session_timeout = 86400,
 	    store_options = {
 		'redis_host': 'localhost',
                 'redis_port': 6379,
                 'redis_pass': '',
 		},
+	    login_url = "/login"
         )
         
         handlers = [
@@ -35,12 +35,14 @@ class Application(tornado.web.Application):
 class MainHandler(BaseHandler):
     def get(self):
 	username = self.get_current_user()
-	print username
         self.write("What's up, " + username + "?")
 
 class LoginHandler(BaseHandler):
+    def get(self):
+	self.render('login.html')
     def post(self):
         self.session["user_name"] = self.get_argument("name")
+	print self.session.get('user_name')
         self.session.save()
 	self.write('save user_name to session')
 
