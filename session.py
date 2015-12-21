@@ -35,7 +35,7 @@ class SessionManager(object):
 		if (request_handler == None):
 			session_id = None
 		else:
-			session_id = request_handler.get_secure_cookie("session_id")
+			session_id = request_handler.get_secure_cookie("SID")
 
 		if session_id == None:
 			session_exists = False
@@ -48,7 +48,7 @@ class SessionManager(object):
 		return session_id
 	
 	def set(self, session,request_handler):
-		request_handler.set_secure_cookie("session_id", session.session_id)
+		request_handler.set_secure_cookie("SID", session.session_id)
 
 		session_data = ujson.dumps(dict(session.items()))
 
