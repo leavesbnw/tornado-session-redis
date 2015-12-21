@@ -42,7 +42,6 @@ class LoginHandler(BaseHandler):
 	self.render('login.html')
     def post(self):
         self.session["user_name"] = self.get_argument("name")
-	print self.session.get('user_name')
         self.session.save()
 	self.write('save user_name to session')
 
