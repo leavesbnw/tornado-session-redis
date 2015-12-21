@@ -30,9 +30,9 @@ class SessionManager(object):
 		except Exception as e:
 			print e 
 			
-	# return a existed session id stored in redis server
+	# return an existed session id stored in redis server
 	# and fill up the current session object  with  the  existed session data,
-	# if a session is not found in redis,generate a new one,and return it
+	# if the  session is not found in redis,generate a new one,and return it
 	# 
 	def get(self,session,request_handler = None):
 		if (request_handler == None):
