@@ -40,10 +40,7 @@ class SessionManager(object):
 		if session_id == None:
 			session_exists = False
 			session_id = self._generate_id()
-		else:
-			session_exists = True
-
-		if session_exists and not self.redis.exists(session_id):
+		elif not self.redis.exists(session_id):
 			session_id = self._generate_id()
 		return session_id
 	
