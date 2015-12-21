@@ -12,7 +12,7 @@ class Session(dict):
 
 		self.session_manager = session_manager
 		self.request_handler = request_handler
-		self.session_id = session_manager.getid(request_handler)
+		self.session_id = session_manager.get(self,request_handler)
 	
 	def save(self):
 		self.session_manager.set(self,self.request_handler)
@@ -31,7 +31,7 @@ class SessionManager(object):
 			print e 
 			
 
-	def getid(self,request_handler = None):
+	def get(self,session,request_handler = None):
 		if (request_handler == None):
 			session_id = None
 		else:
@@ -39,7 +39,10 @@ class SessionManager(object):
 
 		if session_id == None:
 			session_id = self._generate_id()
-		elif not self.redis.exists(session_id):
+		elif  self.redis.exists(session_id):
+			for key,value in ujson.loads(self.redis.get(session_id)).iteritems():
+				session[key] = value
+		else:
 			session_id = self._generate_id()
 		return session_id
 	
