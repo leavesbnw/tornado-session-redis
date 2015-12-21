@@ -38,7 +38,6 @@ class SessionManager(object):
 			session_id = request_handler.get_secure_cookie("SID")
 
 		if session_id == None:
-			session_exists = False
 			session_id = self._generate_id()
 		elif not self.redis.exists(session_id):
 			session_id = self._generate_id()
