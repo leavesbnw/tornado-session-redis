@@ -30,7 +30,10 @@ class SessionManager(object):
 		except Exception as e:
 			print e 
 			
-
+	# return a existed session id stored in redis server
+	# and fill up the current session object  with  the  existed session data,
+	# if a session is not found in redis,generate a new one,and return it
+	# 
 	def get(self,session,request_handler = None):
 		if (request_handler == None):
 			session_id = None
@@ -45,7 +48,7 @@ class SessionManager(object):
 		else:
 			session_id = self._generate_id()
 		return session_id
-	
+	# set session id to cookie and store its value into redis	
 	def set(self, session,request_handler):
 		request_handler.set_secure_cookie("SID", session.session_id)
 
